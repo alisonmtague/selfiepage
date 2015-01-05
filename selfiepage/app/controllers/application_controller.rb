@@ -1,5 +1,50 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+class TasksController < ApplicationController
+	before_action :set_selfy, only: [:show, :edit, :update, :destroy]
+	
+	def index
+		@selfies = Selfy.all
+	end
+
+	def show
+		
+	end
+
+	def new
+		@selfy = Selfy.new
+	end
+
+	def edit
+
+	end
+
+	def create
+		@selfy = Selfy.new(selfy_params)
+		if @selfy.save
+			redirect_to selfy_path(@selfy)
+		else
+			render :new
+		end
+	end
+
+	def update
+	end
+
+	def destroy
+		if @selfy.destroy
+			redirect_to '/'
+		else
+			redirect_to selfy_path(@selfy)
+		end
+	end
+
+	private
+	def selfy_params
+		params.require(:selfy).permit(:body)
+	end
+
+	def selfy_task
+		@selfy = Selfy.find(params[:id])
+	end
+end
 end
