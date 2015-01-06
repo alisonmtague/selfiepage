@@ -1,0 +1,8 @@
+<ul>
+<% @selfies.each do |selfy| %>
+	<li><%= selfy.body %></li>
+	<ul>
+  <li><%= link_to 'Edit', edit_selfy_path(selfy) %></li>
+	<li><%= link_to 'Delete', selfy_path(selfy), method: 'delete' %></li>
+<% end %>
+</ul>

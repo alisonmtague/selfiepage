@@ -1,12 +1,10 @@
 class SelfiesController < ApplicationController
-	before_action :set_selfy, only: [:show, :edit, :update, :destroy]
-	
 	def index
 		@selfies = Selfy.all
 	end
 
 	def show
-		
+		@selfy = Selfy.all
 	end
 
 	def new
@@ -14,26 +12,32 @@ class SelfiesController < ApplicationController
 	end
 
 	def edit
-
+		@selfy = Selfy.find(params[:id])
 	end
 
 	def create
-		@selfy = Selfy.new(task_params)
+		@selfy = Selfy.new(selfy_params)
 		if @selfy.save
-			redirect_to selfy_path(@selfie)
+			redirect_to "/"
 		else
 			render :new
 		end
 	end
 
 	def update
+		@selfy = Selfy.find(params[:id])
+
+		if @selfy.update(selfy_params)
+			redirect to "/"
+		else
+			render :edit
+		end
 	end
 
 	def destroy
+		@selfy = Selfy.find(params[:id])
 		if @selfy.destroy
-			redirect_to '/'
-		else
-			redirect_to selfy_path(@selfy)
+			redirect_to "/"
 		end
 	end
 
@@ -42,7 +46,4 @@ class SelfiesController < ApplicationController
 		params.require(:selfy).permit(:body)
 	end
 
-	def set_selfy
-		@selfy = Selfy.find(params[:id])
-	end
 end
